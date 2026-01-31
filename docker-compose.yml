@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  skill-marketplace:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: skill-marketplace
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-your-secret-key-change-this}
+      - NEXTAUTH_URL=${NEXTAUTH_URL:-http://localhost:3000}
+      - DATABASE_URL=file:/app/data/dev.db
+    volumes:
+      # 持久化数据目录
+      - skill-marketplace-data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  skill-marketplace-data:
+    driver: local
