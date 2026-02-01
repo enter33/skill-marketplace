@@ -6,7 +6,7 @@ import path from 'path'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const adminCheck = await requireAdmin(request)
   if (adminCheck instanceof NextResponse) {
@@ -14,8 +14,9 @@ export async function GET(
   }
 
   try {
+    const { id } = await params
     const skill = await prisma.skill.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         author: {
           select: {
@@ -46,7 +47,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const adminCheck = await requireAdmin(request)
   if (adminCheck instanceof NextResponse) {
@@ -54,11 +55,12 @@ export async function PUT(
   }
 
   try {
+    const { id } = await params
     const body = await request.json()
     const { name, description } = body
 
     const skill = await prisma.skill.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         ...(name && { name }),
         ...(description && { description })
@@ -86,7 +88,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const adminCheck = await requireAdmin(request)
   if (adminCheck instanceof NextResponse) {
@@ -94,9 +96,10 @@ export async function DELETE(
   }
 
   try {
+    const { id } = await params
     // 获取 skill 信息以删除文件
     const skill = await prisma.skill.findUnique({
-      where: { id: params.id },
+      where: { id },
       select: { filePath: true }
     })
 
@@ -109,7 +112,7 @@ export async function DELETE(
 
     // 删除数据库记录
     await prisma.skill.delete({
-      where: { id: params.id }
+      where: { id }
     })
 
     // 删除文件

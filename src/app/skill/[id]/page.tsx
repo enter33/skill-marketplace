@@ -280,7 +280,7 @@ export default function SkillDetailPage() {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
-  const renderTreeNode = (node: TreeNode): JSX.Element => {
+  const renderTreeNode = (node: TreeNode): React.ReactElement => {
     const isExpanded = expandedPaths.has(node.path);
     const isSelected = selectedFile === node.path;
     const paddingLeft = `${node.level * 16}px`;

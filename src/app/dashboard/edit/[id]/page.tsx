@@ -290,23 +290,25 @@ export default function EditSkillPage() {
               </li>
             </ul>
 
-            <div className="mt-6 pt-6 border-t border-gray-100">
-              <h4 className="text-sm font-semibold text-gray-900 mb-3">
-                当前文件信息
-              </h4>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">名称</span>
-                  <span className="font-medium text-gray-900">{skill.name}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">文件路径</span>
-                  <span className="font-medium text-gray-900 truncate max-w-[150px]">
-                    {skill.filePath}
-                  </span>
+            {skill && (
+              <div className="mt-6 pt-6 border-t border-gray-100">
+                <h4 className="text-sm font-semibold text-gray-900 mb-3">
+                  当前文件信息
+                </h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">名称</span>
+                    <span className="font-medium text-gray-900">{skill.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">文件路径</span>
+                    <span className="font-medium text-gray-900 truncate max-w-[150px]">
+                      {skill.filePath}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
