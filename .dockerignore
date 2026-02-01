@@ -67,4 +67,3 @@ scripts/*.js
 .eslintrc*
 .prettierrc*
 jest.config.*
-tsconfig.json
